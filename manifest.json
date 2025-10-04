@@ -2,7 +2,7 @@
   "name": "PV Gendarmerie",
   "short_name": "PV Gend",
   "description": "Application mobile pour la rédaction et la gestion des procès-verbaux d'interpellation (ESI).",
-  "start_url": "./pv-esi-app.html",
+  "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0b1220",
   "theme_color": "#003366",

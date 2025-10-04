@@ -1,7 +1,7 @@
 const CACHE_NAME = 'pv-gendarmerie-v1';
 const URLS_TO_CACHE = [
   './',
-  './pv-esi-app.html',
+  './index.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
