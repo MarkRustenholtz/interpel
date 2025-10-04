@@ -27,6 +27,7 @@
   size: A4;
   margin: var(--m-others) var(--m-others) var(--m-others) var(--m-left);
 }
+
 @media print {
   body {
     background: #fff;
@@ -49,8 +50,7 @@
 }
 
 /* ====== INTERFACE GÉNÉRALE ====== */
-html,
-body {
+html, body {
   height: 100%;
   margin: 0;
   font-family: var(--ui);
@@ -58,7 +58,7 @@ body {
   color: #e5e7eb;
 }
 
-/* ----- Barre d'onglets ----- */
+/* ====== BARRE D'ONGLETS ====== */
 #tabbar {
   position: sticky;
   top: 0;
@@ -79,6 +79,7 @@ body {
   border: 1px solid rgba(255, 255, 255, 0.08);
   font-weight: 600;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 .tabbtn.active {
   background: #233052;
@@ -89,7 +90,7 @@ body {
   padding: 12px;
 }
 
-/* ----- Cartes / formulaires ----- */
+/* ====== CARTES / FORMULAIRES ====== */
 .card {
   background: #0f1a33;
   color: #e5e7eb;
@@ -113,12 +114,14 @@ body {
     grid-template-columns: 1fr;
   }
 }
+
 label {
   display: block;
-  font-size: 12px;
-  color: #93a0b5;
+  font-size: 13px;
+  color: #a5b3cb;
   margin-bottom: 4px;
 }
+
 input,
 select,
 textarea {
@@ -129,13 +132,22 @@ textarea {
   border: 1px solid rgba(255, 255, 255, 0.12);
   background: #0b1428;
   color: #fff;
-  font-size: 14px;
+  font-size: 15px;
+  transition: border-color 0.2s;
 }
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #3b82f6;
+  outline: none;
+}
+
 textarea {
   min-height: 90px;
 }
 
-/* ----- Boutons ----- */
+/* ====== BOUTONS ====== */
 .btn {
   background: #3b82f6;
   border: 0;
@@ -144,6 +156,10 @@ textarea {
   border-radius: 10px;
   font-weight: 700;
   cursor: pointer;
+  transition: background 0.2s;
+}
+.btn:hover {
+  background: #2563eb;
 }
 .btn.secondary {
   background: #64748b;
@@ -160,6 +176,7 @@ textarea {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  margin-top: 10px;
 }
 .kicker {
   font-size: 12px;
@@ -167,12 +184,13 @@ textarea {
   margin-bottom: 8px;
 }
 
-/* ----- Blocs dynamiques (assistants / ESI) ----- */
+/* ====== BLOCS DYNAMIQUES ====== */
 .dyn-block {
   border: 1px dashed rgba(255, 255, 255, 0.16);
   border-radius: 12px;
   padding: 10px;
   margin-top: 8px;
+  background: #0c162d;
 }
 .minirow {
   display: flex;
@@ -207,12 +225,11 @@ textarea {
   margin: 20px auto;
   border-radius: 8px;
   width: 100%;
-  max-width: 95vw; /* s’adapte à la largeur de l’écran */
-  font-size: 19px; /* plus grand sur mobile */
+  max-width: 95vw;
+  font-size: 18px;
   line-height: 1.7;
 }
 
-/* --- Grand écran (A4 réel) --- */
 @media (min-width: 900px) {
   .sheet {
     width: var(--page-w);
@@ -226,7 +243,6 @@ textarea {
   }
 }
 
-/* --- En impression : format officiel --- */
 @media print {
   .sheet {
     width: var(--page-w);
@@ -240,6 +256,7 @@ textarea {
   }
 }
 
+/* ====== EN-TÊTE PV ====== */
 .pv-header {
   display: flex;
   align-items: center;
@@ -274,6 +291,8 @@ h1 {
   color: #555;
   font-style: italic;
 }
+
+/* ====== SIGNATURES ====== */
 .signature-row {
   display: flex;
   justify-content: space-between;
