@@ -291,7 +291,27 @@ h1 {
   color: #555;
   font-style: italic;
 }
+/* ====== LOGO RÉPUBLIQUE FRANÇAISE ====== */
+.logo-rf {
+  display: block;
+  width: 240px;         /* taille équilibrée pour A4 */
+  max-width: 80%;
+  margin: 0 auto 10px auto;
+}
 
+@media print {
+  .logo-rf {
+    width: 220px;
+    margin-bottom: 12px;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo-rf {
+    width: 200px;
+    margin-bottom: 10px;
+  }
+}
 /* ====== SIGNATURES ====== */
 .signature-row {
   display: flex;
@@ -502,6 +522,11 @@ h1 {
         </div>
         <div style="flex:1"></div>
       </div>
+<div class="pv-header">
+  <img src="logo-rf.png" alt="République Française" class="logo-rf">
+</div>
+
+<h1>PROCÈS-VERBAL D’INTERPELLATION</h1>
       <h1>PROCÈS-VERBAL D’INTERPELLATION</h1>
       <div id="pv" class="pv"><p class="muted">Clique sur “Aperçu du PV” dans l’onglet précédent.</p></div>
       <div id="signatures" class="signature-row" style="visibility:hidden;">
