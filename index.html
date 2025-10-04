@@ -102,6 +102,57 @@
   .saved-tab .meta{ display:flex; flex-direction:column; gap:4px; }
   .saved-tab .title{ color:#fff; font-weight:700; }
   .saved-tab .sub{ color:#9aa7bd; font-size:12px; }
+/* --- Amélioration mobile responsive --- */
+@media (max-width: 768px) {
+  body {
+    font-size: 16px;
+    background: #0f172a;
+  }
+
+  .card {
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 16px;
+  }
+
+  label {
+    font-size: 14px;
+  }
+
+  input, select, textarea {
+    font-size: 16px;
+    padding: 12px;
+    border-radius: 10px;
+  }
+
+  .btn {
+    width: 100%;
+    font-size: 16px;
+    padding: 12px;
+  }
+
+  .btnbar {
+    flex-direction: column;
+  }
+
+  .sheet {
+    max-width: 100%;
+    font-size: 18px;
+    line-height: 1.7;
+    padding: 20px;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .signature-row {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .sig-col {
+    min-height: 60px;
+  }
+}
 </style>
 </head>
 <body>
