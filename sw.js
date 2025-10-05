@@ -1,4 +1,4 @@
-const CACHE_NAME = 'pv-gendarmerie-v27';
+const CACHE_NAME = 'pv-gendarmerie-v28';
 const URLS_TO_CACHE = [
   './',
   './index.html',
