@@ -10,7 +10,7 @@
 <link rel="apple-touch-icon" href="icon-512.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <style>
-  :root {
+:root {
   --page-w: 210mm;
   --page-h: 297mm;
   --m-left: 30mm;
@@ -19,7 +19,6 @@
   --ui: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   --brand: #003366;
   --muted: #6b7280;
-  --bg: #0b1220;
 }
 
 /* ====== FORMAT IMPRESSION OFFICIEL ====== */
@@ -54,8 +53,8 @@ html, body {
   height: 100%;
   margin: 0;
   font-family: var(--ui);
-  background: #0f172a;
-  color: #e5e7eb;
+  background: #f0f2f5;  /* gris clair */
+  color: #222;
 }
 
 /* ====== BARRE D'ONGLETS ====== */
@@ -63,28 +62,28 @@ html, body {
   position: sticky;
   top: 0;
   z-index: 20;
-  background: #0b1220;
+  background: #e0e3e7; /* gris clair uniforme */
   display: flex;
   gap: 8px;
   padding: 10px;
-  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.08);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.1);
 }
 .tabbtn {
   flex: 1;
   text-align: center;
   padding: 10px 12px;
-  border-radius: 10px;
-  color: #cbd5e1;
-  background: #162034;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  color: #333;
+  background: #ffffff;
+  border: 1px solid #ccc;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease;
 }
 .tabbtn.active {
-  background: #233052;
+  background: #003366;
   color: #fff;
-  border-color: #3b82f6;
+  border-color: #003366;
 }
 #tab-content {
   padding: 12px;
@@ -92,12 +91,13 @@ html, body {
 
 /* ====== CARTES / FORMULAIRES ====== */
 .card {
-  background: #0f1a33;
-  color: #e5e7eb;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 14px;
-  padding: 14px;
-  margin-bottom: 12px;
+  background: #ffffff;     /* fond blanc */
+  color: #000;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.08);
 }
 .row {
   display: flex;
@@ -118,7 +118,7 @@ html, body {
 label {
   display: block;
   font-size: 13px;
-  color: #a5b3cb;
+  color: #333;
   margin-bottom: 4px;
 }
 
@@ -128,10 +128,10 @@ textarea {
   width: 100%;
   box-sizing: border-box;
   padding: 10px 12px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  background: #0b1428;
-  color: #fff;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  background: #fff;
+  color: #000;
   font-size: 15px;
   transition: border-color 0.2s;
 }
@@ -149,28 +149,28 @@ textarea {
 
 /* ====== BOUTONS ====== */
 .btn {
-  background: #3b82f6;
+  background: #003366;
   border: 0;
   color: #fff;
-  padding: 10px 14px;
-  border-radius: 10px;
+  padding: 10px 16px;
+  border-radius: 8px;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.2s;
 }
 .btn:hover {
-  background: #2563eb;
+  background: #0050aa;
 }
 .btn.secondary {
   background: #64748b;
 }
 .btn.warn {
-  background: #ef4444;
+  background: #d62828;
 }
 .btn.ghost {
   background: transparent;
-  border: 1px dashed rgba(255, 255, 255, 0.2);
-  color: #9fb5ff;
+  border: 1px dashed #aaa;
+  color: #003366;
 }
 .btnbar {
   display: flex;
@@ -180,17 +180,17 @@ textarea {
 }
 .kicker {
   font-size: 12px;
-  color: #93a0b5;
+  color: #555;
   margin-bottom: 8px;
 }
 
 /* ====== BLOCS DYNAMIQUES ====== */
 .dyn-block {
-  border: 1px dashed rgba(255, 255, 255, 0.16);
-  border-radius: 12px;
+  border: 1px dashed #ccc;
+  border-radius: 8px;
   padding: 10px;
   margin-top: 8px;
-  background: #0c162d;
+  background: #fafafa;
 }
 .minirow {
   display: flex;
@@ -204,9 +204,9 @@ textarea {
   display: inline-block;
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: #eee;
   font-size: 12px;
-  color: #d1d5db;
+  color: #333;
 }
 .list {
   display: flex;
@@ -239,7 +239,7 @@ textarea {
     font-size: 17px;
     line-height: 1.6;
     border-radius: 10px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   }
 }
 
@@ -280,7 +280,7 @@ h1 {
   color: #555;
   font-style: italic;
 }
-  
+
 /* ====== LOGO RÉPUBLIQUE FRANÇAISE ====== */
 .pv-header {
   display: flex;
@@ -288,25 +288,18 @@ h1 {
   align-items: flex-start;
   margin-bottom: 10px;
 }
-
 .logo-rf {
   display: block;
-  width: 35mm;       /* Taille réelle papier */
+  width: 35mm;
   height: auto;
   margin: 0;
 }
-
-/* Rendu écran */
 @media screen {
-  .logo-rf {
-    width: 120px;    /* Taille agréable à l'écran */
-  }
+  .logo-rf { width: 120px; }
 }
-
-/* Rendu impression et PDF */
 @media print {
   .logo-rf {
-    width: 35mm !important;  /* Taille fixe en PDF */
+    width: 35mm !important;
     image-rendering: crisp-edges;
   }
 }
@@ -314,24 +307,22 @@ h1 {
 /* ====== SIGNATURES ALIGNÉES ====== */
 .signature-row {
   display: flex;
-  justify-content: space-evenly;  /* espace égal entre les 3 blocs */
-  align-items: flex-end;          /* alignement parfait en bas */
+  justify-content: space-evenly;
+  align-items: flex-end;
   margin-top: 60px;
   text-align: center;
   width: 100%;
   gap: 40px;
   page-break-inside: avoid;
 }
-
 .sig-col {
   flex: 1;
-  min-width: 180px;               /* largeur identique pour tous */
+  min-width: 180px;
   text-align: center;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
-
 .sig-title {
   font-weight: bold;
   text-decoration: underline;
@@ -339,17 +330,13 @@ h1 {
   margin-top: 40px;
   margin-bottom: 0;
 }
-
-/* Même alignement sur mobile */
 @media (max-width: 600px) {
   .signature-row {
     flex-direction: row;
     flex-wrap: nowrap;
     gap: 20px;
   }
-  .sig-col {
-    min-width: 100px;
-  }
+  .sig-col { min-width: 100px; }
 }
 
 /* ====== LISTE DES PV ENREGISTRÉS ====== */
@@ -358,10 +345,11 @@ h1 {
   justify-content: space-between;
   align-items: center;
   gap: 10px;
-  background: #0f1a33;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: #fff;
+  border: 1px solid #ccc;
   border-radius: 12px;
   padding: 10px 12px;
+  color: #000;
 }
 .saved-tab .meta {
   display: flex;
@@ -369,48 +357,25 @@ h1 {
   gap: 4px;
 }
 .saved-tab .title {
-  color: #fff;
+  color: #000;
   font-weight: 700;
 }
 .saved-tab .sub {
-  color: #9aa7bd;
+  color: #555;
   font-size: 12px;
 }
 
-/* ====== RESPONSIVE GLOBAL ====== */
+/* ====== RESPONSIVE ====== */
 @media (max-width: 768px) {
-  body {
-    font-size: 17px;
-  }
-
-  .card {
-    padding: 18px;
-    border-radius: 12px;
-    margin-bottom: 18px;
-  }
-
-  label {
-    font-size: 15px;
-  }
-
-  input,
-  select,
-  textarea {
-    font-size: 17px;
-    padding: 12px;
-  }
-
-  .btn {
-    width: 100%;
-    font-size: 17px;
-    padding: 13px;
-  }
-
-  .btnbar {
-    flex-direction: column;
-  }
+  body { font-size: 17px; }
+  .card { padding: 18px; border-radius: 12px; margin-bottom: 18px; }
+  label { font-size: 15px; }
+  input, select, textarea { font-size: 17px; padding: 12px; }
+  .btn { width: 100%; font-size: 17px; padding: 13px; }
+  .btnbar { flex-direction: column; }
 }
-/* ====== OPTIMISATION DE L’APERÇU SUR ÉCRAN ====== */
+
+/* ====== APERÇU ÉCRAN ====== */
 @media screen {
   .sheet {
     max-width: 900px;
@@ -424,31 +389,21 @@ h1 {
     font-size: 17px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.25);
   }
-
   .sheet h1 {
     font-size: 22px;
     text-align: center;
     margin-bottom: 16px;
   }
-
-  .pv p {
-    margin: 0 0 12px;
-    line-height: 1.7;
-  }
-
-  /* Corrige les bords trop serrés sur mobile */
+  .pv p { margin: 0 0 12px; line-height: 1.7; }
   @media (max-width: 600px) {
     .sheet {
-      margin: 0;
-      padding: 16px;
-      border-radius: 0;
-      width: 100%;
-      box-shadow: none;
-      font-size: 18px;
+      margin: 0; padding: 16px; border-radius: 0;
+      width: 100%; box-shadow: none; font-size: 18px;
     }
   }
 }
 </style>
+
 </head>
 <body>
 
