@@ -311,26 +311,32 @@ h1 {
   }
 }
 
-
-/* ====== SIGNATURES ====== */
+/* ====== SIGNATURES ALIGNÉES ====== */
 .signature-row {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 50px;
+  justify-content: space-evenly;  /* espace égal entre les 3 blocs */
+  align-items: flex-end;          /* alignement parfait en bas */
+  margin-top: 60px;
   text-align: center;
   width: 100%;
+  gap: 40px;
 }
 
 .sig-col {
   flex: 1;
+  min-width: 180px;               /* largeur identique pour tous */
   text-align: center;
-  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .sig-title {
   font-weight: bold;
-  margin-top: 60px;
+  text-decoration: underline;
+  font-size: 15px;
+  margin-top: 40px;
+  margin-bottom: 0;
 }
   
 /* ====== LISTE DES PV ENREGISTRÉS ====== */
@@ -526,13 +532,18 @@ h1 {
     </div>
 
     <!-- Signatures -->
-    <div id="signatures" class="signature-row" style="visibility:hidden;">
-      <div class="sig-col"><div class="sig-title">L’Officier de Police Judiciaire</div></div>
-      <div class="sig-col"><div class="sig-title">Le Rédacteur</div></div>
-      <div class="sig-col"><div class="sig-title" id="sigAssistTitle">L’Assistant</div></div>
-    </div>
-
+<div id="signatures" class="signature-row" style="visibility:hidden;">
+  <div class="sig-col">
+    <div class="sig-title">L’Officier de Police Judiciaire</div>
   </div>
+  <div class="sig-col">
+    <div class="sig-title">Le Rédacteur</div>
+  </div>
+  <div class="sig-col">
+    <div class="sig-title" id="sigAssistTitle">L’Assistant</div>
+  </div>
+</div>
+
   
 <div class="card mobile-only" style="max-width:920px; margin:0 auto 24px auto;">
   <div class="btnbar">
@@ -996,14 +1007,16 @@ function printPV() {
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
 function generatePDF() {
-  // 1) Met à jour le PV si tu as cette fonction
+  // Met à jour le PV avant export
   if (typeof generatePV === 'function') generatePV();
 
-  // 2) On cible la feuille à exporter
   const element = document.getElementById('sheet');
-  if (!element) { alert("❌ Feuille #sheet introuvable."); return; }
+  if (!element) {
+    alert("❌ Impossible de trouver le contenu du PV (#sheet).");
+    return;
+  }
 
-  // 3) Nom du fichier: PV_<NomESI>_<AAAA-MM-JJ>.pdf
+  // Nom du fichier automatique
   const nomEsi = (document.getElementById('nomEsi')?.value || 'ESI')
     .trim()
     .replace(/[^\p{L}\p{N}\-_ ]/gu, '')
@@ -1011,25 +1024,48 @@ function generatePDF() {
   const d = new Date();
   const fileName = `PV_${nomEsi}_${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}.pdf`;
 
-  // 4) Options d’export (A4, qualité correcte, fiable mobile)
+  // Options précises pour html2pdf
   const opt = {
-    margin: [10, 10, 10, 10],                // mm
+    margin: [15, 15, 15, 15],
     filename: fileName,
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+    image: { type: 'jpeg', quality: 1 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      scrollY: 0,
+      windowWidth: element.scrollWidth
+    },
     jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
   };
 
-  // 5) Petit délai pour laisser le DOM finir de s’afficher, puis export
-  setTimeout(() => {
-    html2pdf().set(opt).from(element).save().then(() => {
+  // ✅ Désactive tout ce qui est en dehors du PV pendant la capture
+  const tabbar = document.getElementById('tabbar');
+  const tabcontent = document.getElementById('tab-content');
+  const oldDisplayBar = tabbar?.style.display;
+  const oldDisplayContent = tabcontent?.style.display;
+  if (tabbar) tabbar.style.display = 'none';
+  if (tabcontent) tabcontent.style.display = 'none';
+  element.style.display = 'block';
+
+  // Lance la génération
+  html2pdf()
+    .set(opt)
+    .from(element)
+    .save()
+    .then(() => {
+      // Réaffiche l’interface après génération
+      if (tabbar) tabbar.style.display = oldDisplayBar || '';
+      if (tabcontent) tabcontent.style.display = oldDisplayContent || '';
       alert(`✅ PV enregistré sous ${fileName}`);
-    }).catch(err => {
+    })
+    .catch(err => {
       console.error(err);
-      alert("❌ Échec de la génération du PDF.");
+      alert("❌ Erreur pendant la génération du PDF.");
+      if (tabbar) tabbar.style.display = oldDisplayBar || '';
+      if (tabcontent) tabcontent.style.display = oldDisplayContent || '';
     });
-  }, 300);
 }
+
 </script>
 
 </body>
