@@ -532,7 +532,7 @@ h1 {
   
 <div class="card mobile-only" style="max-width:920px; margin:0 auto 24px auto;">
   <div class="btnbar">
-    <button class="btn" type="button" onclick="printPV()">🖨️ Imprimer / Enregistrer PDF</button>
+    <button class="btn" type="button" onclick="generatePDF()">🖨️ Enregistrer PDF</button>
     <button class="btn" type="button" onclick="saveCurrentPV()">💾 Sauvegarder ce PV</button>
     <button class="btn" type="button" onclick="goBackToEdit()">⬅️ Revenir à la saisie</button>
   </div>
@@ -987,6 +987,44 @@ function printPV() {
     console.error("Erreur dans printPV:", e);
     alert("Une erreur est survenue pendant la préparation du PDF.");
   }
+}
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+function generatePDF() {
+  // 1) Met à jour le PV si tu as cette fonction
+  if (typeof generatePV === 'function') generatePV();
+
+  // 2) On cible la feuille à exporter
+  const element = document.getElementById('sheet');
+  if (!element) { alert("❌ Feuille #sheet introuvable."); return; }
+
+  // 3) Nom du fichier: PV_<NomESI>_<AAAA-MM-JJ>.pdf
+  const nomEsi = (document.getElementById('nomEsi')?.value || 'ESI')
+    .trim()
+    .replace(/[^\p{L}\p{N}\-_ ]/gu, '')
+    .replace(/\s+/g, '_') || 'ESI';
+  const d = new Date();
+  const fileName = `PV_${nomEsi}_${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}.pdf`;
+
+  // 4) Options d’export (A4, qualité correcte, fiable mobile)
+  const opt = {
+    margin: [10, 10, 10, 10],                // mm
+    filename: fileName,
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2, useCORS: true, scrollY: 0 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+
+  // 5) Petit délai pour laisser le DOM finir de s’afficher, puis export
+  setTimeout(() => {
+    html2pdf().set(opt).from(element).save().then(() => {
+      alert(`✅ PV enregistré sous ${fileName}`);
+    }).catch(err => {
+      console.error(err);
+      alert("❌ Échec de la génération du PDF.");
+    });
+  }, 300);
 }
 </script>
 
