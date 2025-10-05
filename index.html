@@ -524,14 +524,16 @@ h1 {
     </div>
 
   </div>
-
-  <div class="card mobile-only" style="max-width:920px; margin:0 auto 24px auto;">
-    <div class="btnbar">
-      <button class="btn" type="button" onclick="printPV()">🖨️ Imprimer / PDF</button>
-      <button class="btn secondary" type="button" onclick="saveCurrentPV()">💾 Sauvegarder ce PV</button>
-      <button class="btn" type="button" onclick="goBackToEdit()">⬅️ Revenir à la saisie</button>
-    </div>
+  
+<div class="card mobile-only" style="max-width:920px; margin:0 auto 24px auto;">
+  <div class="btnbar">
+    <button class="btn" type="button" onclick="printPV()">🖨️ Imprimer / PDF (PC)</button>
+    <button class="btn secondary" type="button" onclick="generatePDF()">📄 Enregistrer en PDF (Mobile)</button>
+    <button class="btn" type="button" onclick="saveCurrentPV()">💾 Sauvegarder ce PV</button>
+    <button class="btn" type="button" onclick="goBackToEdit()">⬅️ Revenir à la saisie</button>
   </div>
+</div>
+
 </div>
 
   <!-- ONGLET 3 : PV enregistrés -->
@@ -975,6 +977,22 @@ if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register('sw.js')
     .then(() => console.log("✅ Service Worker enregistré"))
     .catch(err => console.error("Erreur SW :", err));
+}
+</script>
+<!-- Génération PDF locale -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+<script>
+function generatePDF() {
+  generatePV(); // s’assure que le PV est à jour
+  const element = document.getElementById('sheet');
+  const opt = {
+    margin: 10,
+    filename: 'PV_interpellation.pdf',
+    image: { type: 'jpeg', quality: 0.98 },
+    html2canvas: { scale: 2 },
+    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+  };
+  html2pdf().set(opt).from(element).save();
 }
 </script>
 
