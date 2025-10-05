@@ -289,22 +289,24 @@ h1 {
 }
 
 .logo-rf {
-  width: 120px;          /* Taille plus petite */
-  height: auto;
-  margin: 0;             /* plus de centrage */
   display: block;
+  height: auto;
+  width: clamp(60px, 10vw, 100px); /* S’adapte à la largeur de l’écran */
+  max-width: 15%;                  /* Limite à 15% de la largeur de la feuille */
+  object-fit: contain;             /* Ne déforme jamais le logo */
+  margin: 0;
 }
 
 @media print {
   .logo-rf {
-    width: 100px;        /* encore plus discret sur papier */
-    margin: 0;
+    width: 90px; /* Taille fixe propre pour l’impression A4 */
+    max-width: none;
   }
 }
 
 @media (max-width: 600px) {
   .logo-rf {
-    width: 90px;
+    width: 70px; /* Plus petit sur téléphone */
   }
 }
 
