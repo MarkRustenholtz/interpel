@@ -280,36 +280,31 @@ h1 {
   color: #555;
   font-style: italic;
 }
-/* ====== LOGO RÉPUBLIQUE FRANÇAISE ====== */
+  
+/* ====== LOGO RÉPUBLIQUE FRANÇAISE (TAILLE OFFICIELLE) ====== */
 .pv-header {
   display: flex;
-  justify-content: flex-start; /* Logo à gauche */
+  justify-content: flex-start;
   align-items: flex-start;
   margin-bottom: 10px;
 }
-
+/* Taille officielle : 40 mm x 15 mm */
 .logo-rf {
   display: block;
+  width: 40mm;
   height: auto;
-  width: clamp(60px, 10vw, 100px); /* S’adapte à la largeur de l’écran */
-  max-width: 15%;                  /* Limite à 15% de la largeur de la feuille */
-  object-fit: contain;             /* Ne déforme jamais le logo */
   margin: 0;
+  object-fit: contain;
 }
-
+/* Impression : même taille exacte sur papier */
 @media print {
   .logo-rf {
-    width: 90px; /* Taille fixe propre pour l’impression A4 */
-    max-width: none;
+    width: 40mm;
+    height: auto;
+    margin: 0;
   }
 }
-
-@media (max-width: 600px) {
-  .logo-rf {
-    width: 70px; /* Plus petit sur téléphone */
-  }
-}
-
+  
 /* ====== SIGNATURES ====== */
 .signature-row {
   display: flex;
