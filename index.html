@@ -911,6 +911,16 @@ function saveCurrentPV(){
   localStorage.setItem(LIST_KEY, JSON.stringify(list));
   alert("PV enregistré dans la liste ✅");
 }
+/* =======================
+   Suppression complète des PV enregistrés
+======================= */
+function wipeSaved() {
+  if (confirm("Voulez-vous vraiment effacer toute la liste des PV enregistrés ?")) {
+    localStorage.removeItem(LIST_KEY);
+    refreshSavedList();
+    alert("✅ Liste des PV vidée avec succès !");
+  }
+}
 
 function refreshSavedList(){
   const listEl = document.getElementById('savedList');
