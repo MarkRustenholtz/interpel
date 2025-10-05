@@ -281,31 +281,32 @@ h1 {
   font-style: italic;
 }
   
-/* ====== LOGO RÉPUBLIQUE FRANÇAISE (TAILLE OFFICIELLE) ====== */
+/* ====== LOGO RÉPUBLIQUE FRANÇAISE FIXE ====== */
 .pv-header {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-start; /* Logo à gauche */
   align-items: flex-start;
   margin-bottom: 10px;
 }
-  
-/* Taille officielle : 40 mm x 15 mm */
+
 .logo-rf {
   display: block;
-  width: 40mm;
+  width: 151px;   /* équivaut à 40 mm réels */
   height: auto;
   margin: 0;
   object-fit: contain;
 }
-/* Impression : même taille exacte sur papier */
+
+/* Impression : garde la taille réelle sur PDF/papier */
 @media print {
   .logo-rf {
-    width: 40mm;
+    width: 151px;   /* ~40 mm réels à 96 dpi */
     height: auto;
     margin: 0;
+    transform: scale(1); /* empêche le zoom d’impression */
   }
 }
-  
+
 /* ====== SIGNATURES ====== */
 .signature-row {
   display: flex;
