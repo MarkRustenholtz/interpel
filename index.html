@@ -532,7 +532,7 @@ h1 {
   
 <div class="card mobile-only" style="max-width:920px; margin:0 auto 24px auto;">
   <div class="btnbar">
-    <button class="btn" type="button" onclick="printPV()">🖨️ Imprimer / PDF</button>
+    <button class="btn" type="button" onclick="printPV()">🖨️ Imprimer / Enregistrer PDF</button>
     <button class="btn" type="button" onclick="saveCurrentPV()">💾 Sauvegarder ce PV</button>
     <button class="btn" type="button" onclick="goBackToEdit()">⬅️ Revenir à la saisie</button>
   </div>
@@ -804,18 +804,6 @@ function generatePV(){
   document.getElementById('sigAssistTitle').textContent = assistants.length>1 ? "Les Assistants" : "L’Assistant";
   document.getElementById('signatures').style.visibility = "visible";
 }
-function printPV() {
-  generatePV();
-  const sheet = document.getElementById('sheet');
-  setTimeout(() => {
-    if (sheet && sheet.innerHTML.trim() !== '') {
-      sheet.scrollIntoView(); // force le rendu complet
-      requestAnimationFrame(() => window.print());
-    } else {
-      alert("Le PV est vide. Génère-le d'abord !");
-    }
-  }, 800);
-}
 
 /* =======================
    Autosave + Sauvegardes
@@ -971,6 +959,35 @@ if ('serviceWorker' in navigator) {
     .catch(err => console.error("Erreur SW :", err));
 }
 
+</script>
+<script>
+function printPV() {
+  try {
+    // 1️⃣ Génère ou met à jour le PV
+    if (typeof generatePV === 'function') {
+      generatePV();
+    }
+
+    // 2️⃣ Récupère la feuille à imprimer
+    const sheet = document.getElementById('sheet');
+
+    // 3️⃣ Attendre un peu que le DOM se mette à jour (important)
+    setTimeout(() => {
+      if (sheet && sheet.innerHTML.trim() !== '') {
+        // 4️⃣ S'assurer que le contenu est bien visible à l'écran
+        sheet.scrollIntoView({ behavior: 'instant', block: 'start' });
+        // 5️⃣ Lancer l'impression
+        window.print();
+      } else {
+        alert("⚠️ Le procès-verbal n'est pas encore prêt ou vide. Générez-le d'abord !");
+      }
+    }, 600);
+
+  } catch (e) {
+    console.error("Erreur dans printPV:", e);
+    alert("Une erreur est survenue pendant la préparation du PDF.");
+  }
+}
 </script>
 
 </body>
