@@ -968,18 +968,17 @@ function printPV() {
       generatePV();
     }
 
-    // Récupère le nom de la première ESI (eNom...)
+    // Récupère le nom de la première ESI (eNom…)
     const firstEsiInput = document.querySelector('#esis input[id^="eNom"]');
     let nomEsi = (firstEsiInput && firstEsiInput.value ? firstEsiInput.value.trim() : 'ESI')
       .replace(/[^\p{L}\p{N}\-_ ]/gu, '') // supprime caractères spéciaux
-      .replace(/\s+/g, '_');                // espaces -> underscore
-
+      .replace(/\s+/g, '_');              // espaces → underscore
     if (!nomEsi) nomEsi = 'ESI';
 
-    // Date du jour AAAA-MM-JJ (en TZ locale)
+    // Date du jour AAAA-MM-JJ
     const d = new Date();
     const yyyy = d.getFullYear();
-    const mm = String(d.getMonth()+1).padStart(2, '0');
+    const mm = String(d.getMonth() + 1).padStart(2, '0');
     const dd = String(d.getDate()).padStart(2, '0');
     const suggested = `PV_${nomEsi}_${yyyy}-${mm}-${dd}`;
 
@@ -987,24 +986,54 @@ function printPV() {
     const originalTitle = document.title;
     document.title = suggested;
 
-    // Lancer l'impression après un court délai
+    // Message visuel pendant la préparation
+    const msg = document.createElement('div');
+    msg.id = 'loadingMsg';
+    msg.textContent = '⏳ Préparation du PDF en cours...';
+    Object.assign(msg.style, {
+      position: 'fixed',
+      top: '10px',
+      left: '50%',
+      transform: 'translateX(-50%)',
+      background: '#003366',
+      color: '#fff',
+      padding: '10px 20px',
+      borderRadius: '8px',
+      zIndex: '9999',
+      fontFamily: 'system-ui'
+    });
+    document.body.appendChild(msg);
+
+    // Attendre que le DOM ait bien fini d’insérer le PV
     setTimeout(() => {
       const sheet = document.getElementById('sheet');
-      if (sheet && sheet.innerHTML.trim() !== '') {
-        sheet.scrollIntoView({ behavior: 'instant', block: 'start' });
-        window.print();
-        // Restaure le titre après l'impression
-        setTimeout(() => { document.title = originalTitle; }, 1200);
-        alert(`✅ Nom suggéré du PDF : ${suggested}.pdf`);
-      } else {
-        alert("⚠️ Le procès-verbal est vide ou non généré.");
+      const contenu = sheet?.innerHTML?.trim() || '';
+
+      if (contenu.length < 50) {
+        msg.remove();
+        alert("⚠️ Le procès-verbal est vide ou pas encore généré. Réessaye dans 2 secondes.");
+        document.title = originalTitle;
+        return;
       }
-    }, 500);
+
+      // Lancer l'impression
+      sheet.scrollIntoView({ behavior: 'instant', block: 'start' });
+      window.print();
+
+      // Nettoyage et message final
+      setTimeout(() => {
+        msg.remove();
+        document.title = originalTitle;
+        alert(`✅ Nom suggéré du PDF : ${suggested}.pdf`);
+      }, 1500);
+    }, 800); // délai avant vérification du contenu
+
   } catch (e) {
     console.error("Erreur dans printPV:", e);
-    alert("Une erreur est survenue pendant la préparation du PDF.");
+    alert("❌ Une erreur est survenue pendant la préparation du PDF.");
   }
 }
+
 </script>
 
 </body>
