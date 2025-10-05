@@ -284,50 +284,30 @@ h1 {
 /* ====== LOGO RÉPUBLIQUE FRANÇAISE ====== */
 .pv-header {
   display: flex;
+  justify-content: flex-start;
   align-items: flex-start;
-  gap: 10px;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .logo-rf {
   display: block;
-  width: 35mm;      /* largeur fixe en impression */
+  width: 35mm;       /* Taille réelle papier */
   height: auto;
   margin: 0;
-}
-
-/* Texte à côté du logo */
-.header-text {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  font-family: "Times New Roman", serif;
-  color: #000;
-  line-height: 1.1;
-}
-
-.rf-motto {
-  font-style: italic;
-  font-size: 12pt;
-}
-
-.rf-title {
-  font-weight: bold;
-  font-size: 14pt;
-  letter-spacing: 0.5px;
 }
 
 /* Rendu écran */
 @media screen {
   .logo-rf {
-    width: 120px;   /* taille agréable à l’écran */
+    width: 120px;    /* Taille agréable à l'écran */
   }
 }
 
-/* Rendu impression / PDF */
+/* Rendu impression et PDF */
 @media print {
   .logo-rf {
-    width: 35mm;    /* taille réelle sur papier */
+    width: 35mm !important;  /* Taille fixe en PDF */
+    image-rendering: crisp-edges;
   }
 }
 
@@ -529,15 +509,9 @@ h1 {
   <div class="sheet" id="sheet">
 
     <!-- Logo République Française -->
-   <!-- En-tête officiel République Française -->
-<div class="pv-header">
-  <img src="logo-rf.png" alt="République Française" class="logo-rf">
-  <div class="header-text">
-    <div class="rf-motto">Liberté · Égalité · Fraternité</div>
-    <div class="rf-title">RÉPUBLIQUE FRANÇAISE</div>
-  </div>
+   <div class="pv-header">
+  <img src="logo-rf.png" alt="République Française" class="logo-rf left">
 </div>
-
 
     <!-- Titre principal -->
     <h1>PROCÈS-VERBAL D’INTERPELLATION</h1>
