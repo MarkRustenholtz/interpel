@@ -311,26 +311,32 @@ h1 {
   }
 }
 
-
-/* ====== SIGNATURES ====== */
+/* ====== SIGNATURES ALIGNÉES ====== */
 .signature-row {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin-top: 50px;
+  justify-content: space-evenly;  /* espace égal entre les 3 blocs */
+  align-items: flex-end;          /* alignement parfait en bas */
+  margin-top: 60px;
   text-align: center;
   width: 100%;
+  gap: 40px;
 }
 
 .sig-col {
   flex: 1;
+  min-width: 180px;               /* largeur identique pour tous */
   text-align: center;
-  min-height: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .sig-title {
   font-weight: bold;
-  margin-top: 60px;
+  text-decoration: underline;
+  font-size: 15px;
+  margin-top: 40px;
+  margin-bottom: 0;
 }
   
 /* ====== LISTE DES PV ENREGISTRÉS ====== */
@@ -526,13 +532,18 @@ h1 {
     </div>
 
     <!-- Signatures -->
-    <div id="signatures" class="signature-row" style="visibility:hidden;">
-      <div class="sig-col"><div class="sig-title">L’Officier de Police Judiciaire</div></div>
-      <div class="sig-col"><div class="sig-title">Le Rédacteur</div></div>
-      <div class="sig-col"><div class="sig-title" id="sigAssistTitle">L’Assistant</div></div>
-    </div>
-
+<div id="signatures" class="signature-row" style="visibility:hidden;">
+  <div class="sig-col">
+    <div class="sig-title">L’Officier de Police Judiciaire</div>
   </div>
+  <div class="sig-col">
+    <div class="sig-title">Le Rédacteur</div>
+  </div>
+  <div class="sig-col">
+    <div class="sig-title" id="sigAssistTitle">L’Assistant</div>
+  </div>
+</div>
+
   
 <div class="card mobile-only" style="max-width:920px; margin:0 auto 24px auto;">
   <div class="btnbar">
