@@ -286,26 +286,33 @@ h1 {
   font-style: italic;
 }
 /* ====== LOGO RÉPUBLIQUE FRANÇAISE ====== */
+.pv-header {
+  display: flex;
+  justify-content: flex-start; /* Logo à gauche */
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
 .logo-rf {
+  width: 120px;          /* Taille plus petite */
+  height: auto;
+  margin: 0;             /* plus de centrage */
   display: block;
-  width: 240px;         /* taille équilibrée pour A4 */
-  max-width: 80%;
-  margin: 0 auto 10px auto;
 }
 
 @media print {
   .logo-rf {
-    width: 220px;
-    margin-bottom: 12px;
+    width: 100px;        /* encore plus discret sur papier */
+    margin: 0;
   }
 }
 
 @media (max-width: 600px) {
   .logo-rf {
-    width: 200px;
-    margin-bottom: 10px;
+    width: 90px;
   }
 }
+
 /* ====== SIGNATURES ====== */
 .signature-row {
   display: flex;
@@ -503,9 +510,9 @@ h1 {
   <div class="sheet" id="sheet">
 
     <!-- Logo République Française -->
-    <div class="pv-header" style="text-align:center;">
-      <img src="logo-rf.png" alt="République Française" class="logo-rf">
-    </div>
+   <div class="pv-header">
+  <img src="logo-rf.png" alt="République Française" class="logo-rf left">
+</div>
 
     <!-- Titre principal -->
     <h1>PROCÈS-VERBAL D’INTERPELLATION</h1>
