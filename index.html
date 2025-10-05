@@ -974,37 +974,10 @@ if ('serviceWorker' in navigator) {
 }
 
 </script>
+
+<script> src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
-function printPV() {
-  try {
-    // 1️⃣ Génère ou met à jour le PV
-    if (typeof generatePV === 'function') {
-      generatePV();
-    }
 
-    // 2️⃣ Récupère la feuille à imprimer
-    const sheet = document.getElementById('sheet');
-
-    // 3️⃣ Attendre un peu que le DOM se mette à jour (important)
-    setTimeout(() => {
-      if (sheet && sheet.innerHTML.trim() !== '') {
-        // 4️⃣ S'assurer que le contenu est bien visible à l'écran
-        sheet.scrollIntoView({ behavior: 'instant', block: 'start' });
-        // 5️⃣ Lancer l'impression
-        window.print();
-      } else {
-        alert("⚠️ Le procès-verbal n'est pas encore prêt ou vide. Générez-le d'abord !");
-      }
-    }, 600);
-
-  } catch (e) {
-    console.error("Erreur dans printPV:", e);
-    alert("Une erreur est survenue pendant la préparation du PDF.");
-  }
-}
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script>
 function generatePDF() {
   // Met à jour le PV avant export
   if (typeof generatePV === 'function') generatePV();
@@ -1015,11 +988,13 @@ function generatePDF() {
     return;
   }
 
-  // Nom du fichier automatique
-  const nomEsi = (document.getElementById('nomEsi')?.value || 'ESI')
-    .trim()
-    .replace(/[^\p{L}\p{N}\-_ ]/gu, '')
-    .replace(/\s+/g, '_') || 'ESI';
+  // Recherche automatique du premier champ ESI saisi
+const firstEsiInput = document.querySelector('input[id^="eNom"]');
+const nomEsi = (firstEsiInput && firstEsiInput.value.trim()
+  ? firstEsiInput.value.trim()
+  : 'ESI')
+  .replace(/[^\p{L}\p{N}\-_ ]/gu, '')
+  .replace(/\s+/g, '_');
   const d = new Date();
   const fileName = `PV_${nomEsi}_${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}.pdf`;
 
