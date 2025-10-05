@@ -504,46 +504,40 @@ h1 {
     </div>
   </div>
 
-  <!-- ONGLET 2 : APERÇU / IMPRESSION -->
-  <div id="tab-preview" style="display:none;">
-    <div class="sheet" id="sheet">
-      <div class="pv-header">
-        <div class="logo-wrap" aria-label="Gendarmerie nationale">
-          <!-- Logo intégré (remplace par ton PNG base64 si besoin) -->
-          <svg viewBox="0 0 300 90" width="120" height="36" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gendarmerie nationale">
-            <rect width="300" height="90" fill="#ffffff"/>
-            <rect x="0" y="66" width="300" height="10" fill="#0055A4"/>
-            <rect x="0" y="76" width="300" height="10" fill="#EF4135"/>
-            <circle cx="35" cy="45" r="16" fill="#003366"/>
-            <path d="M35 30c6 5 9 10 9 15s-3 10-9 15c-6-5-9-10-9-15s3-10 9-15z" fill="#fff"/>
-            <text x="65" y="48" font-family="Verdana, Arial, sans-serif" font-size="20" fill="#003366" font-weight="700">GENDARMERIE</text>
-            <text x="65" y="68" font-family="Verdana, Arial, sans-serif" font-size="12" fill="#003366">nationale</text>
-          </svg>
-        </div>
-        <div style="flex:1"></div>
-      </div>
-<div class="pv-header">
-  <img src="logo-rf.png" alt="République Française" class="logo-rf">
-</div>
+ <!-- ONGLET 2 : APERÇU / IMPRESSION -->
+<div id="tab-preview" style="display:none;">
+  <div class="sheet" id="sheet">
 
-
-      <h1>PROCÈS-VERBAL D’INTERPELLATION</h1>
-      <div id="pv" class="pv"><p class="muted">Clique sur “Aperçu du PV” dans l’onglet précédent.</p></div>
-      <div id="signatures" class="signature-row" style="visibility:hidden;">
-        <div class="sig-col"><div class="sig-title">L’Officier de Police Judiciaire</div></div>
-        <div class="sig-col"><div class="sig-title">Le Rédacteur</div></div>
-        <div class="sig-col"><div class="sig-title" id="sigAssistTitle">L’Assistant</div></div>
-      </div>
+    <!-- Logo République Française -->
+    <div class="pv-header" style="text-align:center;">
+      <img src="logo-rf.png" alt="République Française" class="logo-rf">
     </div>
 
-    <div class="card mobile-only" style="max-width:920px; margin:0 auto 24px auto;">
-      <div class="btnbar">
-        <button class="btn" type="button" onclick="printPV()">🖨️ Imprimer / PDF</button>
-        <button class="btn secondary" type="button" onclick="saveCurrentPV()">💾 Sauvegarder ce PV</button>
-        <button class="btn" type="button" onclick="goBackToEdit()">⬅️ Revenir à la saisie</button>
-      </div>
+    <!-- Titre principal -->
+    <h1>PROCÈS-VERBAL D’INTERPELLATION</h1>
+
+    <!-- Contenu dynamique du PV -->
+    <div id="pv" class="pv">
+      <p class="muted">Clique sur “Aperçu du PV” dans l’onglet précédent.</p>
+    </div>
+
+    <!-- Signatures -->
+    <div id="signatures" class="signature-row" style="visibility:hidden;">
+      <div class="sig-col"><div class="sig-title">L’Officier de Police Judiciaire</div></div>
+      <div class="sig-col"><div class="sig-title">Le Rédacteur</div></div>
+      <div class="sig-col"><div class="sig-title" id="sigAssistTitle">L’Assistant</div></div>
+    </div>
+
+  </div>
+
+  <div class="card mobile-only" style="max-width:920px; margin:0 auto 24px auto;">
+    <div class="btnbar">
+      <button class="btn" type="button" onclick="printPV()">🖨️ Imprimer / PDF</button>
+      <button class="btn secondary" type="button" onclick="saveCurrentPV()">💾 Sauvegarder ce PV</button>
+      <button class="btn" type="button" onclick="goBackToEdit()">⬅️ Revenir à la saisie</button>
     </div>
   </div>
+</div>
 
   <!-- ONGLET 3 : PV enregistrés -->
   <div id="tab-saved" class="saved-tab" style="display:none;">
