@@ -963,62 +963,31 @@ if ('serviceWorker' in navigator) {
 <script>
 function printPV() {
   try {
-    if (typeof generatePV === "function") generatePV();
-
-    const sheet = document.getElementById("sheet");
-    if (!sheet || sheet.innerHTML.trim() === "") {
-      alert("⚠️ Le procès-verbal est vide ou non généré.");
-      return;
+    // 1️⃣ Génère ou met à jour le PV
+    if (typeof generatePV === 'function') {
+      generatePV();
     }
 
-    // 🔹 Nom du fichier
-    const firstEsiInput = document.querySelector('#esis input[id^="eNom"]');
-    let nomEsi = (firstEsiInput && firstEsiInput.value ? firstEsiInput.value.trim() : "ESI")
-      .replace(/[^\p{L}\p{N}\-_ ]/gu, "")
-      .replace(/\s+/g, "_");
-    if (!nomEsi) nomEsi = "ESI";
+    // 2️⃣ Récupère la feuille à imprimer
+    const sheet = document.getElementById('sheet');
 
-    const d = new Date();
-    const yyyy = d.getFullYear();
-    const mm = String(d.getMonth() + 1).padStart(2, "0");
-    const dd = String(d.getDate()).padStart(2, "0");
-    const suggested = `PV_${nomEsi}_${yyyy}-${mm}-${dd}`;
+    // 3️⃣ Attendre un peu que le DOM se mette à jour (important)
+    setTimeout(() => {
+      if (sheet && sheet.innerHTML.trim() !== '') {
+        // 4️⃣ S'assurer que le contenu est bien visible à l'écran
+        sheet.scrollIntoView({ behavior: 'instant', block: 'start' });
+        // 5️⃣ Lancer l'impression
+        window.print();
+      } else {
+        alert("⚠️ Le procès-verbal n'est pas encore prêt ou vide. Générez-le d'abord !");
+      }
+    }, 600);
 
-    // 🔹 Ouvre une nouvelle fenêtre pour l’impression (fonctionne même en PWA)
-    const newWin = window.open("", "_blank");
-    newWin.document.write(`
-      <html>
-        <head>
-          <meta charset="UTF-8">
-          <title>${suggested}</title>
-          <style>
-            @page { size: A4; margin: 25mm 25mm 25mm 30mm; }
-            body { font-family: "Times New Roman", serif; color: black; }
-            h1 { text-align: center; text-transform: uppercase; text-decoration: underline; }
-            .pv { text-align: justify; line-height: 1.6; }
-            .signature-row { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; }
-            .sig-col { flex: 1; min-height: 80px; }
-            .sig-title { font-weight: bold; margin-bottom: 46px; }
-          </style>
-        </head>
-        <body>${sheet.innerHTML}</body>
-      </html>
-    `);
-    newWin.document.close();
-
-    // 🔹 Attend que tout soit prêt avant d'imprimer
-    newWin.onload = () => {
-      newWin.focus();
-      newWin.print();
-      alert(`✅ Nom suggéré du PDF : ${suggested}.pdf`);
-    };
   } catch (e) {
-    console.error("Erreur printPV:", e);
-    alert("❌ Une erreur est survenue pendant la préparation du PDF.");
+    console.error("Erreur dans printPV:", e);
+    alert("Une erreur est survenue pendant la préparation du PDF.");
   }
 }
-
-
 </script>
 
 </body>
