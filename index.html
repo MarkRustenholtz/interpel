@@ -281,31 +281,36 @@ h1 {
   font-style: italic;
 }
   
-/* ====== LOGO RÉPUBLIQUE FRANÇAISE FIXE ====== */
+/* ====== LOGO RÉPUBLIQUE FRANÇAISE ====== */
 .pv-header {
   display: flex;
-  justify-content: flex-start; /* Logo à gauche */
+  justify-content: flex-start;
   align-items: flex-start;
   margin-bottom: 10px;
 }
 
 .logo-rf {
   display: block;
-  width: 151px;   /* équivaut à 40 mm réels */
+  width: 35mm;       /* Taille réelle papier */
   height: auto;
   margin: 0;
-  object-fit: contain;
 }
 
-/* Impression : garde la taille réelle sur PDF/papier */
-@media print {
+/* Rendu écran */
+@media screen {
   .logo-rf {
-    width: 151px;   /* ~40 mm réels à 96 dpi */
-    height: auto;
-    margin: 0;
-    transform: scale(1); /* empêche le zoom d’impression */
+    width: 120px;    /* Taille agréable à l'écran */
   }
 }
+
+/* Rendu impression et PDF */
+@media print {
+  .logo-rf {
+    width: 35mm !important;  /* Taille fixe en PDF */
+    image-rendering: crisp-edges;
+  }
+}
+
 
 /* ====== SIGNATURES ====== */
 .signature-row {
@@ -527,8 +532,7 @@ h1 {
   
 <div class="card mobile-only" style="max-width:920px; margin:0 auto 24px auto;">
   <div class="btnbar">
-    <button class="btn" type="button" onclick="printPV()">🖨️ Imprimer / PDF (PC)</button>
-
+    <button class="btn" type="button" onclick="printPV()">🖨️ Imprimer / Enregistrer PDF</button>
     <button class="btn" type="button" onclick="saveCurrentPV()">💾 Sauvegarder ce PV</button>
     <button class="btn" type="button" onclick="goBackToEdit()">⬅️ Revenir à la saisie</button>
   </div>
@@ -801,30 +805,6 @@ function generatePV(){
   document.getElementById('signatures').style.visibility = "visible";
 }
 
-function printPV() {
-  generatePV();
-  setTimeout(() => {
-    const sheet = document.getElementById('sheet');
-    const win = window.open('', '_blank');
-    win.document.write(`
-      <html><head><title>Procès-verbal d'interpellation</title>
-        <style>
-          @page { size: A4; margin: 25mm 25mm 25mm 30mm; }
-          body { font-family: "Times New Roman", serif; color: black; }
-          h1 { text-align: center; text-transform: uppercase; text-decoration: underline; }
-          .pv { text-align: justify; line-height: 1.6; }
-          .signature-row { display: flex; justify-content: space-between; margin-top: 40px; text-align: center; }
-          .sig-col { flex: 1; min-height: 80px; }
-          .sig-title { font-weight: bold; margin-bottom: 46px; }
-        </style>
-      </head>
-      <body>${sheet.innerHTML}</body></html>`);
-    win.document.close();
-    win.focus();
-    win.print();
-  }, 100);
-}
-
 /* =======================
    Autosave + Sauvegardes
 ======================= */
@@ -978,21 +958,52 @@ if ('serviceWorker' in navigator) {
     .then(() => console.log("✅ Service Worker enregistré"))
     .catch(err => console.error("Erreur SW :", err));
 }
+
 </script>
-<!-- Génération PDF locale -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
-function generatePDF() {
-  generatePV(); // s’assure que le PV est à jour
-  const element = document.getElementById('sheet');
-  const opt = {
-    margin: 10,
-    filename: 'PV_interpellation.pdf',
-    image: { type: 'jpeg', quality: 0.98 },
-    html2canvas: { scale: 2 },
-    jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-  };
-  html2pdf().set(opt).from(element).save();
+function printPV() {
+  try {
+    // Met à jour le PV si nécessaire
+    if (typeof generatePV === 'function') {
+      generatePV();
+    }
+
+    // Récupère le nom de la première ESI (eNom...)
+    const firstEsiInput = document.querySelector('#esis input[id^="eNom"]');
+    let nomEsi = (firstEsiInput && firstEsiInput.value ? firstEsiInput.value.trim() : 'ESI')
+      .replace(/[^\p{L}\p{N}\-_ ]/gu, '') // supprime caractères spéciaux
+      .replace(/\s+/g, '_');                // espaces -> underscore
+
+    if (!nomEsi) nomEsi = 'ESI';
+
+    // Date du jour AAAA-MM-JJ (en TZ locale)
+    const d = new Date();
+    const yyyy = d.getFullYear();
+    const mm = String(d.getMonth()+1).padStart(2, '0');
+    const dd = String(d.getDate()).padStart(2, '0');
+    const suggested = `PV_${nomEsi}_${yyyy}-${mm}-${dd}`;
+
+    // Suggère le nom via le titre du document
+    const originalTitle = document.title;
+    document.title = suggested;
+
+    // Lancer l'impression après un court délai
+    setTimeout(() => {
+      const sheet = document.getElementById('sheet');
+      if (sheet && sheet.innerHTML.trim() !== '') {
+        sheet.scrollIntoView({ behavior: 'instant', block: 'start' });
+        window.print();
+        // Restaure le titre après l'impression
+        setTimeout(() => { document.title = originalTitle; }, 1200);
+        alert(`✅ Nom suggéré du PDF : ${suggested}.pdf`);
+      } else {
+        alert("⚠️ Le procès-verbal est vide ou non généré.");
+      }
+    }, 500);
+  } catch (e) {
+    console.error("Erreur dans printPV:", e);
+    alert("Une erreur est survenue pendant la préparation du PDF.");
+  }
 }
 </script>
 
