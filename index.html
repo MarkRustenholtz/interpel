@@ -281,31 +281,56 @@ h1 {
   font-style: italic;
 }
   
-/* ====== LOGO RÉPUBLIQUE FRANÇAISE FIXE ====== */
+/* ====== LOGO RÉPUBLIQUE FRANÇAISE ====== */
 .pv-header {
   display: flex;
-  justify-content: flex-start; /* Logo à gauche */
   align-items: flex-start;
-  margin-bottom: 10px;
+  gap: 10px;
+  margin-bottom: 15px;
 }
 
 .logo-rf {
   display: block;
-  width: 151px;   /* équivaut à 40 mm réels */
+  width: 35mm;      /* largeur fixe en impression */
   height: auto;
   margin: 0;
-  object-fit: contain;
 }
 
-/* Impression : garde la taille réelle sur PDF/papier */
-@media print {
+/* Texte à côté du logo */
+.header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-family: "Times New Roman", serif;
+  color: #000;
+  line-height: 1.1;
+}
+
+.rf-motto {
+  font-style: italic;
+  font-size: 12pt;
+}
+
+.rf-title {
+  font-weight: bold;
+  font-size: 14pt;
+  letter-spacing: 0.5px;
+}
+
+/* Rendu écran */
+@media screen {
   .logo-rf {
-    width: 151px;   /* ~40 mm réels à 96 dpi */
-    height: auto;
-    margin: 0;
-    transform: scale(1); /* empêche le zoom d’impression */
+    width: 120px;   /* taille agréable à l’écran */
   }
 }
+
+/* Rendu impression / PDF */
+@media print {
+  .logo-rf {
+    width: 35mm;    /* taille réelle sur papier */
+  }
+}
+
 
 /* ====== SIGNATURES ====== */
 .signature-row {
@@ -504,9 +529,15 @@ h1 {
   <div class="sheet" id="sheet">
 
     <!-- Logo République Française -->
-   <div class="pv-header">
-  <img src="logo-rf.png" alt="République Française" class="logo-rf left">
+   <!-- En-tête officiel République Française -->
+<div class="pv-header">
+  <img src="logo-rf.png" alt="République Française" class="logo-rf">
+  <div class="header-text">
+    <div class="rf-motto">Liberté · Égalité · Fraternité</div>
+    <div class="rf-title">RÉPUBLIQUE FRANÇAISE</div>
+  </div>
 </div>
+
 
     <!-- Titre principal -->
     <h1>PROCÈS-VERBAL D’INTERPELLATION</h1>
