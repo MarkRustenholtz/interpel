@@ -805,12 +805,17 @@ function generatePV(){
   document.getElementById('signatures').style.visibility = "visible";
 }
 function printPV() {
-  generatePV(); // met à jour ton contenu
+  generatePV();
+  const sheet = document.getElementById('sheet');
   setTimeout(() => {
-    window.print();
-  }, 200);
+    if (sheet && sheet.innerHTML.trim() !== '') {
+      sheet.scrollIntoView(); // force le rendu complet
+      requestAnimationFrame(() => window.print());
+    } else {
+      alert("Le PV est vide. Génère-le d'abord !");
+    }
+  }, 800);
 }
-
 
 /* =======================
    Autosave + Sauvegardes
